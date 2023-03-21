@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<style type="text/css">
+  #disp{
+      width: 200px;
+      height: 350px;
+      padding: 30px;
+      background: black;
+      color:white;
+      font-size: 20px;
+      font-weight: bold;
+  }
+
+</style>
+
+<!-- jQuery를 사용하려면... -->
+<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+
+<script type="text/javascript">
+  
+  var regular_dan = /^[2-9]{1}$/;
+  
+  function send(){
+	
+	  //var dan = document.getElementById("dan").value;
+	  var dan = $("#dan").val();
+	  
+	  if(regular_dan.test(dan)==false){
+		  alert('2~9사이의 숫자만 입력하세요');
+		  $("#dan").value='';
+		  $("#dan"). focus();
+		  return;
+	  }
+	  
+	  var url   = "gugudan.do"; //  GugudanAction
+	  var param = "dan=" + dan;
+	  
+	//jQuery통해서 Ajax통신 이용
+	$.ajax({
+		
+		url			: 'gugudan1.do',  //호출할 서버
+		type		: 'GET',         //요청방식
+		async		: true,          //비동기(true)  동기(false)  
+		data		: {'dan': dan }, //parameter(query) gugudan.do?dan=5
+		dataType	: 'html',        //수신타입(text,json,xml)
+		//success(결과처리 성공시)
+		success   	: function(result_data){
+		 
+		 $("#disp").html(result_data);
+		 
+		},
+		//error(진행과정/결과처리시 에러)
+		error     	: function(err){
+		 alert(err.responseText);
+		}
+		
+	});
+  }
+  
+  
+  
+</script>
+
+</head>
+<body>
+단:<input id="dan">
+   <input type="button" value="계산해줘" onclick="send();">
+<hr>
+
+<div id="disp">여기에결과출력</div>
+   
+</body>
+</html>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="member">
+
+  <!-- 전체 조회 -->
+  <select id="member_list" resultType="member">
+  	select * from member order by mem_idx asc
+  </select>
+  
+  <!-- idx에 해당되는 게시물 1건 -->
+  <select id="member_one_idx" parameterType="int" resultType="member">
+  	select * from member where mem_idx = #{ mem_idx }
+  </select>
+  
+  <select id="member_one_id" parameterType="String" resultType="member">
+    select * from member where mem_id = #{ mem_id }
+  </select>
+  
+  <!-- 추가 -->
+  <!-- parameter 처리 방법: mapper 내에서 parameter 변수 표현 방법 #{ 속성(변수명 }
+  							parameter가 객체가 들어오면 변수명은 속성명을 기록
+  							ex) #{ name } -> vo.getName()과 동일한 결과
+  -->
+  <insert id="member_insert" parameterType="member">
+  	insert into member values values((select nvl(max(mem_idx), 0)+1 from member),
+  									  #{ mem_name },
+  									  #{ mem_id },
+  									  #{ mem_pwd },
+  									  #{ mem_zipcode },
+  									  #{ mem_address },
+  									  default,
+  									  default)
+  </insert>
+  
+  <!-- 삭제 -->
+  <!-- parameter가 단일 타입(int, String)일 경우 변수명 아무거나 사용 가능 -->
+  <delete id="member_delete" parameterType="int">
+  	delete from member where mem_idx = #{ mem_idx }
+  </delete>
+  
+  <update id="member_update" parameterType="member">
+  	update set member mem_name = #{ mem_name },
+  					  mem_pwd = #{ mem_pwd },
+  					  mem_zipcode = #{ mem_zipcode },
+  					  mem_address = #{ mem_address },
+  					  mem_grade = #{ mem_grade },
+  					  where mem_idx = #{ mem_idx }
+  </update>
+
+</mapper>
+

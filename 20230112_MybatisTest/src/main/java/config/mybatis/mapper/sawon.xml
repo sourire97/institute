@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="sawon">
+
+  <!-- DB컬럼명과 VO속성명이 다를경우 연결  -->
+  <resultMap type="vo.SawonVo" id="sawon_map">
+     <result  column="sahire"   property="sahire"/>
+     <result  column="sahire"   property="sahire2"/>
+  </resultMap>
+
+  <select id="sawon_list"  resultMap="sawon_map">
+     select * from sawon
+  </select>
+
+
+  <!-- 
+  <select id="sawon_list"  resultType="vo.SawonVo">
+      select * from sawon
+  </select>
+  
+ -->
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+

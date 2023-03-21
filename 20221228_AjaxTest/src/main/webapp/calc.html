@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<!-- Bootstrap 3.x 사용설정 -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  
+<style type="text/css">
+  #box{
+      width: 600px;
+      margin: auto;
+      margin-top: 50px;
+  }
+</style>  
+  
+<script type="text/javascript">
+
+  var regular_number = /^[0-9]{1,}$/;
+  
+  //jQuery 초기화
+  $(document).ready(function(){
+	  
+	  //결과보기 버튼이 클릭되면
+	  $("#btn_result").click(function(){
+		  
+		  var su1 = $("#su1").val();
+		  var su2 = $("#su2").val();
+		  
+		  //class selector
+		  $(".res_su1").html(su1);
+		  $(".res_su2").html(su2);
+		  
+		  //jQuery Ajax요청
+		  $.ajax({
+			  url		: 'calc.do', //CalcAction
+			  data		: {'su1' : su1, 'su2':su2}, //param
+			  dataType	: 'json',
+			  success	: function(result){
+				  //result = {'plus':15, 'minus':5, 'multiply':50, 'divide':2}
+				  $("#res_plus").html(result.plus);
+				  $("#res_minus").html(result.minus);
+				  $("#res_multiply").html(result.multiply);
+				  $("#res_divide").html(result.divide);
+				  
+			  },
+			  error		:	function(err){
+				  alert(err.responseText);
+			  }
+			  
+		  });
+		  
+	  });
+	  
+  });
+  
+  
+</script>  
+  
+</head>
+<body>
+
+<div id="box">
+	수1:<input id="su1"><br>
+	수2:<input id="su2"><br><br>
+	    <input type="button"  value="결과보기" id="btn_result">
+	<hr>
+	<table class="table">
+	   <tr class="success">
+	      <th>수1</th>
+	      <th>연산자</th>
+	      <th>수2</th>
+	      <th>결과값</th>
+	   </tr>
+	   
+	   <tr>
+	      <td><span class="res_su1"></span></td>
+	      <td><span>+</span></td>
+	      <td><span class="res_su2"></span></td>
+	      <td><span id="res_plus"></span></td>
+	   </tr>
+	   <tr>
+	      <td><span class="res_su1"></span></td>
+	      <td><span>-</span></td>
+	      <td><span class="res_su2"></span></td>
+	      <td><span id="res_minus"></span></td>
+	   </tr>
+	   <tr>
+	      <td><span class="res_su1"></span></td>
+	      <td><span>*</span></td>
+	      <td><span class="res_su2"></span></td>
+	      <td><span id="res_multiply"></span></td>
+	   </tr>
+	   <tr>
+	      <td><span class="res_su1"></span></td>
+	      <td><span>/</span></td>
+	      <td><span class="res_su2"></span></td>
+	      <td><span id="res_divide"></span></td>
+	   </tr>
+	
+	</table>
+</div>    
+    
+
+
+</body>
+</html>

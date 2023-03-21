@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<script type="text/javascript">
+
+	function send(f){
+		
+		var jumin_no = f.jumin_no.value.trim();
+		
+		//입력한 주민번호에 대한 정규식 체크
+		var regular_jumin = 
+			/^(?:[0-9]{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[1,2][0-9]|3[0,1]))-[1-4][0-9]{6}$/;
+		
+		if(regular_jumin.test(jumin_no)==false){
+			alert('올바른 주민번호를 입력하세요');
+			f.jumin_no.value = '';
+			f.jumin_no.focus();
+			return;
+		  }	  
+		  
+		f.submit();//전송
+  }
+
+</script>
+
+
+
+</head>
+<body>
+  <form action="jumin.do">
+     주민번호:<input name="jumin_no">
+           <input type="button"  value="확인" onclick="send(this.form);"> 
+  </form>
+</body>
+</html>
