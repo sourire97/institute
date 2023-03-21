@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<script type="text/javascript">
+
+  /*
+     ? : 0 or 1
+     * : 0...n
+     + : 1...n
+  */
+
+  var regular_number = /^[0-9]+$/;
+
+  //방법1: document객체내 forms객체가 
+  //       문서내의 form정보를 배열로 관리
+  function send1(){
+	  
+	  var f = document.forms[0];
+	  //입력된 값 얻어오기
+	  var su1 = f.su1.value;
+	  var su2 = f.su2.value;
+	  
+	  if(regular_number.test(su1)==false){
+		  alert('숫자만 입력하세요');
+		  f.su1.value = '';
+		  f.su1.focus();
+		  return;
+	  }
+	  
+	  if(regular_number.test(su2)==false){
+		  alert('숫자만 입력하세요');
+		  f.su2.value = '';
+		  f.su2.focus();
+		  return;
+	  }
+	  //지정된 action으로 전송
+	  f.submit(); //(주의) submit() 괄호 누락하지 말것
+  }
+  
+  //방법2 : form name이용한 방법
+  function send2(){
+	  
+	  var f = document.f;
+	  
+	  //입력된 값 얻어오기
+	  var su1 = f.su1.value;
+	  var su2 = f.su2.value;
+	  
+	  if(regular_number.test(su1)==false){
+		  alert('숫자만 입력하세요');
+		  f.su1.value = '';
+		  f.su1.focus();
+		  return;
+	  }
+	  
+	  if(regular_number.test(su2)==false){
+		  alert('숫자만 입력하세요');
+		  f.su2.value = '';
+		  f.su2.focus();
+		  return;
+	  }
+	  //지정된 action으로 전송
+	  f.submit(); //(주의) submit() 괄호 누락하지 말것
+  }
+	  
+	  
+  function send3(f){
+	  //         f = this.form
+	 alert(f.action);
+	  
+  }	  
+  
+
+</script>
+
+</head>
+<body>
+     <!--  form data 처리하는 방법 -->
+	 <form name="f"  action="calc.do">
+	    수1:<input name="su1"><br>
+	    수2:<input name="su2"><br>
+	    
+	    <input type="button" value="전송(방법1)" onclick="send1();">
+	    <input type="button" value="전송(방법2)" onclick="send2();">
+	    <!--   this.form : this를 소유하고 있는 form정보  -->
+	    <input type="button" value="전송(방법3)" onclick="send3(this.form);">
+	 	
+	 	<!-- this.form은 form element만 사용가능 -->
+	    <!-- 주의사항 : <button> tag or type="image"는 자동으로 onsubmit()호출된다 
+	         조치사항: onclick에서 return false( onsubmit() 하지말아라) -->
+	    <button onclick="send3(this.form); return false;">전송(button)</button>
+	    
+	    <!-- this.form form element만 가능하다(img form element가 아니다) -->
+	    <img src="image/전송.png" onclick="send3(this.form);">
+		
+		<input type = "image"  src = "image/전송.png" onclick="send3(this.form);
+		return false;">	
+	 </form>
+
+</body>
+</html>
